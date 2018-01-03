@@ -145,7 +145,7 @@ function gastro24_rpt_sc($atts)
                 }
 
                 /* START plan. */
-                $table_view .= '<div class="rpt_plan  ' . $ori_f . ' rpt_plan_' . $key . ' ' . $reco_class . ' '
+                $table_view .= '<div class="eq_height rpt_plan  ' . $ori_f . ' rpt_plan_' . $key . ' ' . $reco_class . ' '
                                . $plan['_rpt_custom_classes'] . '">';
 
                 /* Title. */
