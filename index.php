@@ -114,7 +114,7 @@ function gastro24_rpt_sc($atts)
         $table_view .= '<div id="rpt_pricr" class="rpt_plans rpt_' . $nb_plans . '_plans rpt_style_basic">';
 
         /* START inner. */
-        $table_view .= '<div class="' . $title_fs_class . $subtitle_fs_class . $description_fs_class . $price_fs_class
+        $table_view .= '<div class="row-eq-height ' . $title_fs_class . $subtitle_fs_class . $description_fs_class . $price_fs_class
                        . $recurrence_fs_class . $features_fs_class . $button_fs_class . '">';
 
         if (is_array($plans) || is_object($plans)) {
@@ -164,7 +164,7 @@ function gastro24_rpt_sc($atts)
                 }
 
                 /* START plan head (price). */
-                $table_view .= '<div class="rpt_head rpt_head_' . $key . '">';
+                $table_view .= '<div class="rpt_head row-eq-height rpt_head_' . $key . '">';
 
                 /* Recurrence. */
                 if (!empty($plan['_rpt_recurrence'])) {
@@ -200,7 +200,7 @@ function gastro24_rpt_sc($atts)
                 /* Subtitle. */
                 if (!empty($plan['_rpt_subtitle'])) {
                     $table_view .=
-                        '<div style="color:' . $plan['_rpt_color'] . ';" class="rpt_subtitle rpt_subtitle_' . $key
+                        '<div class="rpt_subtitle rpt_subtitle_' . $key
                         . '">' . $plan['_rpt_subtitle'] . '</div>';
                 }
 
@@ -218,7 +218,7 @@ function gastro24_rpt_sc($atts)
                 /* If custom button. */
                 if (!empty($plan['_rpt_btn_custom_btn'])) {
 
-                    $table_view .= '<div class="rpt_custom_btn" style="background-color:' . $plan['_rpt_color'] . '">';
+                    $table_view .= '<div class="rpt_custom_btn">';
                     $table_view .= do_shortcode($plan['_rpt_btn_custom_btn']);
                     $table_view .= '</div>';
 
@@ -228,11 +228,9 @@ function gastro24_rpt_sc($atts)
                     /* START default button. */
                     if (!empty($plan['_rpt_btn_text'])) {
                         $table_view .=
-                            '<a ' . $link_behavior . ' href="' . do_shortcode($btn_link) . '" style="background:'
-                            . $plan['_rpt_color'] . '" class="rpt_foot rpt_foot_' . $key . '">';
+                            '<a ' . $link_behavior . ' href="' . do_shortcode($btn_link) . '" class="rpt_foot rpt_foot_' . $key . '">';
                     } else {
-                        $table_view .= '<a ' . $link_behavior . ' style="background:' . $plan['_rpt_color']
-                                       . '" class="rpt_foot rpt_foot_' . $key . '">';
+                        $table_view .= '<a ' . $link_behavior . ' class="rpt_foot rpt_foot_' . $key . '">';
                     }
 
                     $table_view .= do_shortcode($btn_text);
