@@ -171,6 +171,31 @@ function gastro24_rpt_sc($atts) {
 
 							/* END plan head. */
 							$table_view .= '</div>';
+							
+							
+							/* If custom button. */
+							if (!empty($plan['_rpt_btn_custom_btn'])){
+
+								$table_view .= '<div class="rpt_custom_btn" style="background-color:'.$plan['_rpt_color'].'">';
+									$table_view .= do_shortcode($plan['_rpt_btn_custom_btn']);
+								$table_view .= '</div>';
+
+							/* If NOT custom button. */
+							} else {
+
+								/* START default button. */
+								if (!empty($plan['_rpt_btn_text'])){
+									$table_view .= '<a '. $link_behavior .' href="' . do_shortcode($btn_link) . '" style="background:' . $plan['_rpt_color'] . '" class="rpt_foot rpt_foot_' . $key . '">';
+								} else {
+									$table_view .= '<a '. $link_behavior .' style="background:' . $plan['_rpt_color'] . '" class="rpt_foot rpt_foot_' . $key . '">';
+								}
+
+									$table_view .= do_shortcode($btn_text);
+
+								/* END default button. */
+								$table_view .= '</a>';
+
+							}
 
 							/* Features. */
 							if (!empty($plan['_rpt_features'])){
@@ -227,29 +252,7 @@ function gastro24_rpt_sc($atts) {
 								$link_behavior = 'target="_self"';
 							}
 
-							/* If custom button. */
-							if (!empty($plan['_rpt_btn_custom_btn'])){
 
-								$table_view .= '<div class="rpt_custom_btn" style="background-color:'.$plan['_rpt_color'].'">';
-									$table_view .= do_shortcode($plan['_rpt_btn_custom_btn']);
-								$table_view .= '</div>';
-
-							/* If NOT custom button. */
-							} else {
-
-								/* START default button. */
-								if (!empty($plan['_rpt_btn_text'])){
-									$table_view .= '<a '. $link_behavior .' href="' . do_shortcode($btn_link) . '" style="background:' . $plan['_rpt_color'] . '" class="rpt_foot rpt_foot_' . $key . '">';
-								} else {
-									$table_view .= '<a '. $link_behavior .' style="background:' . $plan['_rpt_color'] . '" class="rpt_foot rpt_foot_' . $key . '">';
-								}
-
-									$table_view .= do_shortcode($btn_text);
-
-								/* END default button. */
-								$table_view .= '</a>';
-
-							}
 
 						/* END plan. */
 						$table_view .= '</div>';
