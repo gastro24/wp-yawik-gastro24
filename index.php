@@ -8,7 +8,15 @@ Author: Carsten Bleek <bleek@cross-solution.de>
 
 // Loading text domain
 add_action('plugins_loaded', 'yawik_gastro24_load_plugin_textdomain');
+add_action( 'wp_enqueue_scripts', 'child_enqueue_styles');
 
+/* 6th January,2017
+child_enqueue_styles() : Load css.
+style.css file is located in css folder.
+*/
+function child_enqueue_styles() {
+    wp_enqueue_style( 'style', get_template_directory_uri() . '/css/style.css', array());
+}
 
 add_shortcode("rpt", "gastro24_rpt_sc");
 
@@ -257,18 +265,29 @@ function gastro24_rpt_sc($atts)
 
                     foreach ($features as $small_key => $feature) {
                         if (!empty($feature)) {
+                            
+                            /* 6th January,2017
+                              $rpt_feature_text_class is used to define color class for feature text.
+                              If there is -n prefix before feature text then it will indicate as disabled label. Otherwise an enabled label.
+                              Class for Disabled label is 'rpt_yk_inactive' with light gray color.
+                              Class for Enabled label is 'rpt_yk_active' with light black color.
+                              I found only two color so I had used only two class rpt_yk_inactive & rpt_yk_active. And I have not used rpt_yk_
+feature_section class.
+                             */
+                            /*
+                              NOTE : I have replaced color name/code with class name.
+                              I do not found any hook / filter for YAWIK Gastro24 so I had added color class in this file directly.
+                             */
 
                             $check = substr($feature, 0, 2);
                             if ($check == '-n') {
                                 $feature     = substr($feature, 2);
-                                $check_color = '#bbbbbb';
+                                $rpt_feature_text_class = 'rpt_yk_inactive';
                             } else {
-                                $check_color = 'black';
+                                $rpt_feature_text_class = 'rpt_yk_active';
                             }
 
-                            $table_view .=
-                                '<div style="color:' . $check_color . ';" class="rpt_feature rpt_feature_' . $key . '-'
-                                . $small_key . '">';
+                            $table_view .= '<div class="rpt_feature rpt_feature_' . $key . '-' . $small_key . ' '. $rpt_feature_text_class . '">';
                             $table_view .= $feature;
                             $table_view .= '</div>';
 
