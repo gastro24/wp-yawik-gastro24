@@ -222,7 +222,27 @@ function gastro24_rpt_sc($atts)
                 /* END plan head. */
                 $table_view .= '</div>';
 
+                /* Gets button data. */
+                if (!empty($plan['_rpt_btn_text'])) {
+                    $btn_text = $plan['_rpt_btn_text'];
+                    if (!empty($plan['_rpt_btn_link'])) {
+                        $btn_link = $plan['_rpt_btn_link'];
+                    } else {
+                        $btn_link = '#';
+                    }
+                } else {
+                    $btn_text = '';
+                    $btn_link = '#';
+                }
 
+                /* Gets button behavior data. */
+                $newcurrentwindow = get_post_meta($post->ID, '_rpt_open_newwindow', true);
+                if ($newcurrentwindow == 'newwindow') {
+                    $link_behavior = 'target="_blank"';
+                } else {
+                    $link_behavior = 'target="_self"';
+                }
+                
                 /* If custom button. */
                 if (!empty($plan['_rpt_btn_custom_btn'])) {
 
@@ -295,27 +315,6 @@ feature_section class.
                     }
 
                     $table_view .= '</div>'; // close
-                }
-
-                /* Gets button data. */
-                if (!empty($plan['_rpt_btn_text'])) {
-                    $btn_text = $plan['_rpt_btn_text'];
-                    if (!empty($plan['_rpt_btn_link'])) {
-                        $btn_link = $plan['_rpt_btn_link'];
-                    } else {
-                        $btn_link = '#';
-                    }
-                } else {
-                    $btn_text = '';
-                    $btn_link = '#';
-                }
-
-                /* Gets button behavior data. */
-                $newcurrentwindow = get_post_meta($post->ID, '_rpt_open_newwindow', true);
-                if ($newcurrentwindow == 'newwindow') {
-                    $link_behavior = 'target="_blank"';
-                } else {
-                    $link_behavior = 'target="_self"';
                 }
 
 
