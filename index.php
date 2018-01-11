@@ -348,4 +348,30 @@ feature_section class.
 
 }
 
-?>
+?><?php
+
+function caf_add_api_fields() {
+  register_rest_field('post', 'meta-fields', array('get_callback' => 'caf_get_post_meta_fields'));  
+  register_rest_field('page', 'meta-fields', array('get_callback' => 'caf_get_post_meta_fields'));  
+}
+
+add_action('rest_api_init', 'caf_add_api_fields');
+
+function caf_get_post_meta_fields($object)
+{
+  $desc = get_post_meta($object['id'], 'meta-description');
+  $desc = $desc ? $desc[0] : '';
+  $tags = get_post_meta($object['id'], 'meta-keywords');
+  $tags = $tags ? $tags[0] : '';
+  $title = get_post_meta($object['id'], 'meta-title');
+  $title = $title ? $title[0] : '';
+  
+  
+  return array(
+    'title' => $title,
+    'description' => $desc,
+    'keywords' => $tags,
+  );
+}
+
+
