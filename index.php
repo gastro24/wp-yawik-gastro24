@@ -8,15 +8,6 @@ Author: Carsten Bleek <bleek@cross-solution.de>
 
 // Loading text domain
 add_action('plugins_loaded', 'yawik_gastro24_load_plugin_textdomain');
-add_action( 'wp_enqueue_scripts', 'child_enqueue_styles');
-
-/* 6th January,2017
-child_enqueue_styles() : Load css.
-style.css file is located in css folder.
-*/
-function child_enqueue_styles() {
-    wp_enqueue_style( 'style', get_template_directory_uri() . '/css/style.css', array());
-}
 
 add_shortcode("rpt", "gastro24_rpt_sc");
 
@@ -149,18 +140,19 @@ function gastro24_rpt_sc($atts)
                 }
 
                 if (empty($plan['_rpt_custom_classes'])) {
-                    $plan['_rpt_custom_classes'] = '';
+                    $plan['_rpt_custom_classes'] = ''; 
                 }
 
                 /* START plan. */
-                $table_view .= '<div class="eq_height rpt_plan  ' . $ori_f . ' rpt_plan_' . $key . ' ' . $reco_class . ' '
+                $table_view .= '<div class="col-md-3">';
+                $table_view .= '<div class="eq_height panel panel-primary rpt_plan  ' . $ori_f . ' rpt_plan_' . $key . ' ' . $reco_class . ' '
                                . $plan['_rpt_custom_classes'] . '">';
 
                 /* Title. */
                 $title_style = 'style="text-align:' . $title_align_style . ';"';
 
                 if (!empty($plan['_rpt_title'])) {
-                    $table_view .= '<div ' . $title_style . ' class="rpt_title rpt_title_' . $key . '">';
+                    $table_view .= '<div ' . $title_style . ' class="panel-heading rpt_title_' . $key . '">';
 
                     if (!empty($plan['_rpt_icon'])) {
                         $table_view .= '<img src="' . $plan['_rpt_icon'] . '" class="rpt_icon rpt_icon_' . $key
@@ -172,7 +164,7 @@ function gastro24_rpt_sc($atts)
                 }
 
                 /* START plan head (price). */
-                $table_view .= '<div class="rpt_head row-eq-height rpt_head_' . $key . '">';
+                $table_view .= '<div class="panel-body row-eq-height rpt_head_' . $key . '">';
 
                 /* Recurrence. */
                 if (!empty($plan['_rpt_recurrence'])) {
@@ -222,38 +214,24 @@ function gastro24_rpt_sc($atts)
                 /* END plan head. */
                 $table_view .= '</div>';
 
-                /* Gets button data. */
-                if (!empty($plan['_rpt_btn_text'])) {
-                    $btn_text = $plan['_rpt_btn_text'];
-                    if (!empty($plan['_rpt_btn_link'])) {
-                        $btn_link = $plan['_rpt_btn_link'];
-                    } else {
-                        $btn_link = '#';
-                    }
-                } else {
-                    $btn_text = '';
-                    $btn_link = '#';
-                }
-
-                /* Gets button behavior data. */
-                $newcurrentwindow = get_post_meta($post->ID, '_rpt_open_newwindow', true);
-                if ($newcurrentwindow == 'newwindow') {
-                    $link_behavior = 'target="_blank"';
-                } else {
-                    $link_behavior = 'target="_self"';
-                }
-                
+                /* START UL for panel list group. */
+                $table_view .= '<ul class="list-group">';
                 /* If custom button. */
                 if (!empty($plan['_rpt_btn_custom_btn'])) {
 
+                    $table_view .= '<li class="list-group-item">';
                     $table_view .= '<div class="rpt_custom_btn">';
                     $table_view .= do_shortcode($plan['_rpt_btn_custom_btn']);
                     $table_view .= '</div>';
+                    $table_view .= '</li>';
 
                     /* If NOT custom button. */
                 } else {
 
                     /* START default button. */
+                    
+                    /* list group Item. */
+                    $table_view .= '<li class="list-group-item">';
                     if (!empty($plan['_rpt_btn_text'])) {
                         $table_view .=
                             '<a ' . $link_behavior . ' href="' . do_shortcode($btn_link) . '" class="rpt_foot rpt_foot_' . $key . '">';
@@ -265,6 +243,7 @@ function gastro24_rpt_sc($atts)
 
                     /* END default button. */
                     $table_view .= '</a>';
+                    $table_view .= '</li>';
 
                 }
 
@@ -307,9 +286,12 @@ feature_section class.
                                 $rpt_feature_text_class = 'rpt_yk_active';
                             }
 
+                            /* list group Item. */
+                            $table_view .= '<li class="list-group-item">';
                             $table_view .= '<div class="rpt_feature rpt_feature_' . $key . '-' . $small_key . ' '. $rpt_feature_text_class . '">';
                             $table_view .= $feature;
                             $table_view .= '</div>';
+                            $table_view .= '</li>';
 
                         }
                     }
@@ -317,8 +299,32 @@ feature_section class.
                     $table_view .= '</div>'; // close
                 }
 
+                /* Gets button data. */
+                if (!empty($plan['_rpt_btn_text'])) {
+                    $btn_text = $plan['_rpt_btn_text'];
+                    if (!empty($plan['_rpt_btn_link'])) {
+                        $btn_link = $plan['_rpt_btn_link'];
+                    } else {
+                        $btn_link = '#';
+                    }
+                } else {
+                    $btn_text = '';
+                    $btn_link = '#';
+                }
 
+                /* Gets button behavior data. */
+                $newcurrentwindow = get_post_meta($post->ID, '_rpt_open_newwindow', true);
+                if ($newcurrentwindow == 'newwindow') {
+                    $link_behavior = 'target="_blank"';
+                } else {
+                    $link_behavior = 'target="_self"';
+                }
+
+                /* END UL for panel list group. */
+                $table_view .= '</ul>';
                 /* END plan. */
+                $table_view .= '</div>';
+                /* END col-md-3 */
                 $table_view .= '</div>';
 
             }
