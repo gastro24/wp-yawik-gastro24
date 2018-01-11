@@ -164,7 +164,7 @@ function gastro24_rpt_sc($atts)
                 }
 
                 /* START plan head (price). */
-                $table_view .= '<div class="panel-body row-eq-height rpt_head_' . $key . '">';
+                $table_view .= '<div class="panel-body rpt_head rpt_head_' . $key . '">';
 
                 /* Recurrence. */
                 if (!empty($plan['_rpt_recurrence'])) {
@@ -216,6 +216,29 @@ function gastro24_rpt_sc($atts)
 
                 /* START UL for panel list group. */
                 $table_view .= '<ul class="list-group">';
+
+
+                /* Gets button data. */
+                if (!empty($plan['_rpt_btn_text'])) {
+                    $btn_text = $plan['_rpt_btn_text'];
+                    if (!empty($plan['_rpt_btn_link'])) {
+                        $btn_link = $plan['_rpt_btn_link'];
+                    } else {
+                        $btn_link = '#';
+                    }
+                } else {
+                    $btn_text = '';
+                    $btn_link = '#';
+                }
+
+                /* Gets button behavior data. */
+                $newcurrentwindow = get_post_meta($post->ID, '_rpt_open_newwindow', true);
+                if ($newcurrentwindow == 'newwindow') {
+                    $link_behavior = 'target="_blank"';
+                } else {
+                    $link_behavior = 'target="_self"';
+                }
+
                 /* If custom button. */
                 if (!empty($plan['_rpt_btn_custom_btn'])) {
 
@@ -234,9 +257,9 @@ function gastro24_rpt_sc($atts)
                     $table_view .= '<li class="list-group-item">';
                     if (!empty($plan['_rpt_btn_text'])) {
                         $table_view .=
-                            '<a ' . $link_behavior . ' href="' . do_shortcode($btn_link) . '" class="rpt_foot rpt_foot_' . $key . '">';
+                            '<a ' . $link_behavior . ' href="' . do_shortcode($btn_link) . '" class="btn btn-primary rpt_foot_' . $key . '">';
                     } else {
-                        $table_view .= '<a ' . $link_behavior . ' class="rpt_foot rpt_foot_' . $key . '">';
+                        $table_view .= '<a ' . $link_behavior . ' class="btn btn-primary rpt_foot_' . $key . '">';
                     }
 
                     $table_view .= do_shortcode($btn_text);
@@ -297,27 +320,6 @@ feature_section class.
                     }
 
                     $table_view .= '</div>'; // close
-                }
-
-                /* Gets button data. */
-                if (!empty($plan['_rpt_btn_text'])) {
-                    $btn_text = $plan['_rpt_btn_text'];
-                    if (!empty($plan['_rpt_btn_link'])) {
-                        $btn_link = $plan['_rpt_btn_link'];
-                    } else {
-                        $btn_link = '#';
-                    }
-                } else {
-                    $btn_text = '';
-                    $btn_link = '#';
-                }
-
-                /* Gets button behavior data. */
-                $newcurrentwindow = get_post_meta($post->ID, '_rpt_open_newwindow', true);
-                if ($newcurrentwindow == 'newwindow') {
-                    $link_behavior = 'target="_blank"';
-                } else {
-                    $link_behavior = 'target="_self"';
                 }
 
                 /* END UL for panel list group. */
