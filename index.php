@@ -140,7 +140,7 @@ function gastro24_rpt_sc($atts)
                 }
 
                 if (empty($plan['_rpt_custom_classes'])) {
-                    $plan['_rpt_custom_classes'] = '';
+                    $plan['_rpt_custom_classes'] = ''; 
                 }
 
                 /* START plan. */
