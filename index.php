@@ -113,7 +113,7 @@ function gastro24_rpt_sc($atts)
         $table_view .= '<div id="rpt_pricr" class="rpt_plans rpt_' . $nb_plans . '_plans rpt_style_basic">';
 
         /* START inner. */
-        $table_view .= '<div class="row row-eq-height ' . $title_fs_class . $subtitle_fs_class . $description_fs_class . $price_fs_class
+        $table_view .= '<div class="row-eq-height ' . $title_fs_class . $subtitle_fs_class . $description_fs_class . $price_fs_class
                        . $recurrence_fs_class . $features_fs_class . $button_fs_class . '">';
 
         if (is_array($plans) || is_object($plans)) {
